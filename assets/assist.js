@@ -119,6 +119,18 @@
       ask(input.value);
     });
 
+    // Enter should send the question. A lone input in a form normally submits on
+    // its own, but that is the one interaction almost everyone uses, so it is
+    // wired up explicitly rather than left to the browser. preventDefault stops
+    // the implicit submit, so the question is never sent twice; isComposing
+    // keeps Enter working as "accept" for IME keyboards mid-word.
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.isComposing) {
+        event.preventDefault();
+        ask(input.value);
+      }
+    });
+
     const open = (yes) => {
       panel.hidden = !yes;
       launcher.setAttribute("aria-expanded", String(yes));
