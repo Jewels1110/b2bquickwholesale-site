@@ -55,6 +55,7 @@
         <li>We do not sell data, run advertising, or share data with anyone except the services
           listed below that are needed to run the app.</li>
         <li>This website sets no cookies and runs no analytics or tracking scripts.</li>
+        <li>The support assistant never receives your customers' names, emails, orders or addresses.</li>
       </ul>
 
       <h2>What the app reads from your store</h2>
@@ -74,6 +75,24 @@
       <p>This data is read when a screen is opened and used to produce what you see. It is not copied
         into a database of ours, and it is not used for any other purpose.</p>
 
+      <h2>The support assistant</h2>
+      <p>The app and this website include an assistant that answers setup questions. It is powered by
+        Claude, from Anthropic. What it receives depends on where you use it:</p>
+      <ul>
+        <li><strong>On this website:</strong> your question and the public documentation. Nothing else.</li>
+        <li><strong>Inside the app:</strong> your question, the public documentation, and a summary of
+          your store's setup checklist — what is configured and what is missing.</li>
+      </ul>
+      <p><strong>No personal data is sent.</strong> Before anything leaves our server, contact names and
+        email addresses are removed, and company, location, catalog and shipping-rate names are replaced
+        with labels such as "Company 1". Your own names are put back into the answer on our server, so you
+        read your real wording while the AI service never receives it. No customer records, orders,
+        addresses or payment details are ever sent.</p>
+      <p>Anthropic processes these requests to produce the answer and does not use them to train its
+        models. We keep the text of questions asked for up to 90 days so we can see what merchants find
+        confusing and improve the product and this documentation; answers are not stored. Don't type
+        personal or payment details into the assistant — it never needs them.</p>
+
       <h2>What we store</h2>
       <ul>
         <li><strong>Your Shopify session</strong>: your store's domain and the access token Shopify
@@ -83,6 +102,8 @@
           your own Shopify store as metafields, not on our server.</li>
         <li><strong>Support emails</strong>: if you email us, we keep that correspondence so we can
           help you.</li>
+        <li><strong>Questions asked to the assistant</strong>: the question text and your store's domain,
+          for up to 90 days.</li>
       </ul>
       <p>We do not store customer names, email addresses, addresses, orders, products or prices.</p>
 
@@ -97,6 +118,8 @@
         <li><strong>Render Services, Inc.</strong> — hosting for the app's server (United States).</li>
         <li><strong>Google LLC</strong> — our support email address is a Gmail address, so emails you
           send us are processed by Google.</li>
+        <li><strong>Anthropic PBC</strong> — powers the support assistant, as described above (United
+          States).</li>
       </ul>
       <p>That is the complete list. No analytics, no advertising networks, no data brokers.</p>
 
@@ -164,5 +187,6 @@
 </footer>
 
 <script src="assets/site.js" defer></script>
+<script src="assets/assist.js" defer></script>
 </body>
 </html>
