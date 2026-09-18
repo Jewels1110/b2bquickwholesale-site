@@ -28,7 +28,9 @@
     if (wanted <= 0) return 0;
     const stock = product.stock;
     let n = Math.max(product.min, Math.ceil(wanted / product.step) * product.step);
-    if (stock > 0 && n > stock) n = Math.floor(stock / product.step) * product.step;
+    // Always clamp to stock. Guarding this with stock > 0 read "0 means no limit",
+    // so the quantity on an out-of-stock product counted happily upwards.
+    if (n > stock) n = Math.floor(stock / product.step) * product.step;
     return Math.max(0, n);
   };
 
@@ -124,7 +126,7 @@
         <span class="od__total" data-line></span>
       </div>
       <div class="od__cell--action">
-        <button class="od__add" type="button" data-add ${p.stock === 0 ? "disabled" : ""}>${p.stock === 0 ? "Unavailable" : "Add"}</button>
+        <button class="od__add" type="button" data-add ${fit(p, p.min) ? "" : "disabled"}>${fit(p, p.min) ? "Add" : "Unavailable"}</button>
       </div>
     </article>`,
   ).join("");
