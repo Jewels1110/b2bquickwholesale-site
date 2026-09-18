@@ -93,7 +93,10 @@
       try {
         const response = await fetch(ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          // text/plain keeps this a CORS "simple request", so the browser sends
+          // no preflight. An application/json POST triggers an OPTIONS first,
+          // which the app's router answers with 405 — the whole widget failed.
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
           body: JSON.stringify({ question, history }),
         });
         const result = await response.json();
