@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Setup guide — B2B Quick Wholesale</title>
+<meta name="description" content="Set up wholesale on Shopify from scratch: customer accounts, companies, catalogs and prices, the ordering page, wholesale shipping rates, and a test order. Written for people who don't speak Shopify.">
+<meta property="og:title" content="Setup guide — B2B Quick Wholesale">
+<meta property="og:description" content="Set up wholesale on Shopify from scratch: customer accounts, companies, catalogs and prices, the ordering page, wholesale shipping rates, and a test order. Written for people who don't speak Shopify.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="B2B Quick Wholesale">
+<meta property="og:url" content="https://b2bquickwholesale.com/setup.html">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://b2bquickwholesale.com/setup.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .guide { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 940px) { .guide { grid-template-columns: 16rem minmax(0, 1fr); align-items: start; } }
+  .guide__nav { position: sticky; top: 5.4rem; font-size: .93rem; }
+  .guide__nav ol { list-style: none; margin: 0; padding: 0; counter-reset: gn; }
+  .guide__nav li { counter-increment: gn; border-left: 2px solid var(--rule); }
+  .guide__nav a { display: block; padding: .45rem .8rem; text-decoration: none; color: var(--ink-2); }
+  .guide__nav a::before { content: counter(gn, decimal-leading-zero) "  "; font-family: var(--mono); font-size: .76rem; color: var(--ink-3); }
+  .guide__nav a:hover { color: var(--ink); background: var(--paper-2); }
+  .guide__nav a[data-current] { color: var(--ink); font-weight: 600; box-shadow: inset 2px 0 0 var(--green); }
+  .part { scroll-margin-top: 6rem; padding-top: 2.6rem; }
+  .part + .part { border-top: 1px solid var(--rule); margin-top: 2.6rem; }
+  .part h2 { font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
+  .part__kicker { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .part__time { font-size: .85rem; color: var(--ink-3); }
+  .do { list-style: none; margin: 1.2rem 0; padding: 0; counter-reset: do; }
+  /* Positioned number, not a grid column: a step mixes text, bold labels and click
+     paths, and a grid put each of those in its own cell (they overlapped). */
+  .do > li { counter-increment: do; position: relative; padding: .55rem 0 .75rem 2.7rem; }
+  .do > li::before { content: counter(do); position: absolute; left: 0; top: .6rem; font: 600 .82rem/1.7 var(--mono); color: var(--paper); background: var(--ink); border-radius: 50%; width: 1.7rem; height: 1.7rem; text-align: center; }
+  .do .path { display: block; width: fit-content; max-width: 100%; margin-top: .5rem; }
+  .check { list-style: none; padding: 0; margin: 1rem 0; }
+  .check li { padding: .45rem 0 .45rem 1.8rem; position: relative; border-bottom: 1px solid var(--rule); }
+  .check li::before { content: "☐"; position: absolute; left: 0; color: var(--ink-3); font-size: 1.05rem; }
+  .email { background: var(--paper-2); border: 1px solid var(--rule); border-radius: var(--radius); padding: 1.1rem 1.3rem; font-size: .96rem; }
+  .email p { margin-bottom: .8rem; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="logo" href="index.html">
+      <span class="logo__chip">B2B</span>
+      <span class="logo__word">Quick <span>Wholesale</span></span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" data-nav aria-label="Main">
+      <a href="features.html">Features</a>
+      <a href="demo.html">See it work</a>
+      <a href="setup.html" aria-current="page">Setup guide</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a class="btn btn--sm" href="pricing.html#install">Install on Shopify</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section--tight">
+    <div class="wrap">
+      <p class="label">Setup guide</p>
+      <h1 style="font-size:clamp(2.2rem,5vw,3.6rem)">Wholesale on Shopify, from an empty store to a first order.</h1>
+      <p class="lede">This covers everything, including the parts of Shopify's own B2B that have
+        nothing to do with our app. No jargon, exact click paths, and what each screen should look
+        like when you've got it right. Allow about two hours the first time.</p>
+      <div class="note">
+        <h4>Already set up B2B in Shopify?</h4>
+        <p>Skip to <a href="#part-5">Part 5: install the app</a>. Parts 1 to 4 are Shopify's own
+          setup, which you may already have done.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight rule-top">
+    <div class="wrap guide">
+      <nav class="guide__nav" data-guide-nav aria-label="Guide sections">
+        <p class="label">On this page</p>
+        <ol>
+          <li><a href="#part-0">Before you start</a></li>
+          <li><a href="#part-1">Turn on customer accounts</a></li>
+          <li><a href="#part-2">Add your first company</a></li>
+          <li><a href="#part-3">Set wholesale prices</a></li>
+          <li><a href="#part-4">Minimums and case sizes</a></li>
+          <li><a href="#part-5">Install the app</a></li>
+          <li><a href="#part-6">Create the ordering page</a></li>
+          <li><a href="#part-7">Wholesale shipping</a></li>
+          <li><a href="#part-8">Invite your buyers</a></li>
+          <li><a href="#part-9">Test it yourself</a></li>
+          <li><a href="#part-10">When something looks wrong</a></li>
+        </ol>
+      </nav>
+
+      <div>
+        <!-- ===================== PART 0 ===================== -->
+        <article class="part" id="part-0">
+          <p class="part__kicker">Part 0 · <span class="part__time">5 minutes</span></p>
+          <h2>Before you start</h2>
+          <p>Four things to have ready. None of them cost extra.</p>
+          <ul class="check">
+            <li><strong>A Shopify plan that includes B2B.</strong> Basic, Grow, Advanced or Plus.
+              B2B used to be Plus-only; it isn't any more.</li>
+            <li><strong>A theme from the last few years.</strong> Any Online Store 2.0 theme, which
+              includes Shopify's free themes (Dawn, Horizon, Trade and others). If your theme is
+              older than about 2021, the ordering page can't be added to it.</li>
+            <li><strong>Your wholesale pricing decided.</strong> Usually a percentage off retail
+              (for example 50%), or a fixed price per product.</li>
+            <li><strong>One real wholesale customer to test with.</strong> Their business name and
+              the email address they'll sign in with.</li>
+          </ul>
+          <div class="note">
+            <h4>How Shopify B2B fits together</h4>
+            <p>A <strong>company</strong> is the business you sell to. Each company has at least one
+              <strong>location</strong> (where it ships to and what it pays). People at that business
+              are <strong>contacts</strong>, and they sign in with their own email. A
+              <strong>catalog</strong> holds your wholesale prices and is assigned to the location.
+              Get those four right and everything else follows.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 1 ===================== -->
+        <article class="part" id="part-1">
+          <p class="part__kicker">Part 1 · <span class="part__time">5 minutes</span></p>
+          <h2>Turn on customer accounts</h2>
+          <p>Wholesale buyers must sign in, and Shopify's B2B only works with its current accounts
+            system. Buyers get a six-digit code by email; there's no password to forget.</p>
+          <ol class="do">
+            <li>In your Shopify admin, click <strong>Settings</strong> (bottom left), then
+              <strong>Customer accounts</strong>.
+              <span class="path"><b>Settings → Customer accounts</b></span></li>
+            <li>Choose <strong>Customer accounts</strong> (the current version). If you see an option
+              called "Classic customer accounts", that's the old one and B2B can't use it.</li>
+            <li>Click <strong>Save</strong>.</li>
+          </ol>
+          <div class="note">
+            <h4>If your retail customers use the old accounts</h4>
+            <p>You can leave classic accounts on for retail shoppers and still use current accounts
+              for wholesale buyers. Shopify calls this running both; your wholesale buyers use the
+              sign-in link on your ordering page.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 2 ===================== -->
+        <article class="part" id="part-2">
+          <p class="part__kicker">Part 2 · <span class="part__time">10 minutes</span></p>
+          <h2>Add your first company</h2>
+          <p>Do this once for a real customer. Once you've seen it work end to end, add the rest.</p>
+          <ol class="do">
+            <li>Go to <strong>Customers</strong>, then the <strong>Companies</strong> tab.
+              <span class="path"><b>Customers → Companies</b></span></li>
+            <li>Click <strong>Add company</strong>. Enter the business name exactly as your buyer
+              would recognise it, then <strong>Save</strong>. Shopify creates one location for you
+              automatically.</li>
+            <li>Open the location (it'll be named after the company). Add the
+              <strong>shipping address</strong> and, if you give terms, set
+              <strong>Payment terms</strong> such as Net 30. If you always take payment up front,
+              leave it as due on receipt.</li>
+            <li>Still on the company, find <strong>Contacts</strong> and click
+              <strong>Add contact</strong>. Enter the buyer's name and email. This email is how they
+              sign in, so use the one they actually read.</li>
+            <li>Give the contact permission to order. Shopify offers "ordering only" and "location
+              admin". Ordering only is right for most buyers.</li>
+          </ol>
+          <div class="note">
+            <h4>What "good" looks like</h4>
+            <p>On the company page you should see one location with an address, and at least one
+              contact with an email. If a company has no contact, nobody can sign in, and our setup
+              checklist will flag exactly that.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 3 ===================== -->
+        <article class="part" id="part-3">
+          <p class="part__kicker">Part 3 · <span class="part__time">15 minutes</span></p>
+          <h2>Set your wholesale prices with a catalog</h2>
+          <p>A catalog is Shopify's price list: which products a company can buy, and what they pay.
+            This is where your wholesale discount lives.</p>
+          <ol class="do">
+            <li>Go to <strong>Markets</strong>, then <strong>Catalogs</strong>.
+              <span class="path"><b>Markets → Catalogs</b></span></li>
+            <li>Click <strong>Create catalog</strong> and give it a name only you will see, such as
+              "Wholesale 50%".</li>
+            <li>Choose <strong>All products</strong> if every product is available to wholesale, or
+              <strong>Specific products</strong> to pick a list. You can change this later.</li>
+            <li>Set the price. For a straight discount, use <strong>Overall adjustments →
+              Price decrease</strong> and enter your percentage. For individual prices, use
+              <strong>Manage products and pricing</strong> and type the price for each one. A fixed
+              price always beats the overall adjustment.</li>
+            <li>Click <strong>Save</strong>.</li>
+            <li>Assign the catalog to the company you just made. On <strong>Shopify Plus</strong>,
+              assign it straight to the company location. On <strong>Basic, Grow and Advanced</strong>,
+              assign it to a B2B market and put that company's location in that market.</li>
+          </ol>
+          <div class="note note--warn">
+            <h4>The mistake that costs the most time</h4>
+            <p>If a location ends up with two catalogs, Shopify charges the <strong>lowest</strong>
+              price across both. An extra catalog with no discount on it doesn't "add" retail
+              pricing, it can undo your wholesale pricing for products only that catalog contains.
+              Our setup checklist warns you when a location has more than one.</p>
+          </div>
+          <div class="note">
+            <h4>How many catalogs can I have?</h4>
+            <p>On Basic, Grow and Advanced: up to three active catalogs across all your B2B markets,
+              which is plenty for "everyone gets the same deal" or a few pricing tiers. On Plus:
+              unlimited, and you can assign them to individual companies.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 4 ===================== -->
+        <article class="part" id="part-4">
+          <p class="part__kicker">Part 4 · <span class="part__time">10 minutes, optional</span></p>
+          <h2>Minimums and case sizes</h2>
+          <p>If you sell in sixes, or won't ship fewer than 12, tell Shopify. The ordering page then
+            enforces it while the buyer types, instead of you fixing orders afterwards.</p>
+          <ol class="do">
+            <li>Open your catalog: <span class="path"><b>Markets → Catalogs → your catalog</b></span></li>
+            <li>In <strong>Products and pricing</strong>, click <strong>Manage</strong>, then
+              <strong>Manage products and pricing</strong>.</li>
+            <li>For a product, set the <strong>minimum</strong>, the <strong>increment</strong>
+              (your case size) and, if you want one, a <strong>maximum</strong>.</li>
+            <li>Save.</li>
+          </ol>
+          <p>Volume pricing works too: set a lower price at, say, 24 units, and buyers see the break
+            when they reach it.</p>
+        </article>
+
+        <!-- ===================== PART 5 ===================== -->
+        <article class="part" id="part-5">
+          <p class="part__kicker">Part 5 · <span class="part__time">2 minutes</span></p>
+          <h2>Install B2B Quick Wholesale</h2>
+          <ol class="do">
+            <li>Install the app from the Shopify App Store. Your 7-day trial starts when you pick a
+              plan; nothing is charged until it ends.</li>
+            <li>Open the app. It lands on <strong>Setup</strong>, a checklist that has already read
+              your store.</li>
+            <li>Work down the list. Anything marked <em>Needs fixing</em> has a button that takes you
+              straight to the screen that fixes it.</li>
+          </ol>
+          <div class="note">
+            <h4>The checklist is the instruction manual</h4>
+            <p>It checks your companies, contacts, catalogs, prices, ordering page, theme and
+              shipping, and tells you in plain language what's missing. If it says you're ready, you
+              are.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 6 ===================== -->
+        <article class="part" id="part-6">
+          <p class="part__kicker">Part 6 · <span class="part__time">10 minutes</span></p>
+          <h2>Create the ordering page</h2>
+          <p>This is the page your buyers will use. The app makes it, then you add the order form to
+            your theme.</p>
+          <ol class="do">
+            <li>On the <strong>Setup</strong> checklist, click <strong>Create the page</strong>. The
+              app creates a page at <code>/pages/wholesale-ordering</code>.</li>
+            <li>Click <strong>Add to theme</strong>. Your theme editor opens with the order form
+              ready to drop in.</li>
+            <li>In the panel on the left, choose your <strong>wholesale source collection</strong> —
+              the collection holding the products wholesale buyers may order. Use an existing
+              collection or make one first.</li>
+            <li>Click <strong>Save</strong> in the top right of the theme editor.</li>
+            <li>Back in the app, refresh the checklist. The ordering page item should turn green.</li>
+          </ol>
+          <div class="note">
+            <h4>The theme editor may preview a different page</h4>
+            <p>That's normal and doesn't matter. Use the page picker at the top of the editor to
+              preview your ordering page if you want to see it while you set it up.</p>
+          </div>
+          <p>Optional settings worth knowing, all in that same panel:</p>
+          <ul>
+            <li><strong>Match my theme's colours</strong> — on by default, so the page looks like the
+              rest of your store. Turn it off to pick your own accent colour.</li>
+            <li><strong>Categories</strong> — filter buttons across the top, one per line you type.</li>
+            <li><strong>Free shipping threshold</strong> — shows buyers how much more to add.</li>
+            <li><strong>Retail price (MSRP)</strong> — show the price they'll sell at next to their
+              cost.</li>
+          </ul>
+        </article>
+
+        <!-- ===================== PART 7 ===================== -->
+        <article class="part" id="part-7">
+          <p class="part__kicker">Part 7 · <span class="part__time">15 minutes</span></p>
+          <h2>Wholesale shipping that retail shoppers never see</h2>
+          <p>This is the part most stores get wrong. Without it, either your wholesale rates appear
+            for everyone, or your buyers pay retail postage on a pallet.</p>
+          <ol class="do">
+            <li>In the app, open the <strong>Shipping</strong> tab.</li>
+            <li>Enter your wholesale rate tiers, for example: $10 under $100, $20 from $100 to $250,
+              free above $250. The app creates rates with those names in every shipping zone that
+              needs them.</li>
+            <li>Leave <strong>find my wholesale rates automatically</strong> on. It treats any rate
+              with "wholesale" in the name as wholesale, which is why the names matter.</li>
+            <li>Turn the rules on. From then on, wholesale buyers see only wholesale rates, and
+              retail shoppers never see them.</li>
+            <li>Decide who can use <strong>local delivery</strong> and <strong>pickup</strong>, if
+              you offer them.</li>
+          </ol>
+          <div class="note note--warn">
+            <h4>Before you ever uninstall</h4>
+            <p>Use <strong>Remove wholesale rates</strong> in the Shipping tab first. Uninstalling
+              removes the rules but leaves the rates behind, and every retail shopper would then see
+              them at checkout.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 8 ===================== -->
+        <article class="part" id="part-8">
+          <p class="part__kicker">Part 8 · <span class="part__time">10 minutes</span></p>
+          <h2>Invite your buyers</h2>
+          <p>There's no invitation to send from Shopify. Buyers simply sign in with the email you
+            added as a contact, so tell them where to go. Something like this works:</p>
+          <div class="email">
+            <p><strong>Subject:</strong> Your wholesale ordering page is ready</p>
+            <p>Hi [name],</p>
+            <p>You can now place your wholesale orders online, any time:
+              <strong>yourstore.com/pages/wholesale-ordering</strong></p>
+            <p>Sign in with this email address and we'll send you a six-digit code — there's no
+              password to remember. You'll see your own pricing, everything you can order on one
+              page, and your last order ready to repeat.</p>
+            <p>Any trouble, reply to this email and I'll sort it out.</p>
+            <p>[your name]</p>
+          </div>
+          <p class="small" style="margin-top:1rem">Add the page to your main menu as "Wholesale
+            ordering" if you want buyers to find it without the link.</p>
+        </article>
+
+        <!-- ===================== PART 9 ===================== -->
+        <article class="part" id="part-9">
+          <p class="part__kicker">Part 9 · <span class="part__time">15 minutes</span></p>
+          <h2>Test it yourself, as a buyer</h2>
+          <p>Do this before you tell anyone. Add yourself as a contact on a test company, using an
+            email you can receive.</p>
+          <ul class="check">
+            <li>Open the ordering page signed out. You should see a sign-in prompt, not products.</li>
+            <li>Sign in with your test contact's email and the code Shopify emails you. You land back
+              on the ordering page.</li>
+            <li>Check the prices are your wholesale prices, not retail.</li>
+            <li>Type a quantity below your minimum. It should snap up to the minimum.</li>
+            <li>Add a few products. The bag at the top of your theme should update.</li>
+            <li>Go to checkout. You should see only wholesale shipping rates.</li>
+            <li>Open your store in a private window, signed out, and add anything to the cart. At
+              checkout you should see only your normal retail rates.</li>
+            <li>Place the test order, then refund or cancel it.</li>
+          </ul>
+          <div class="note">
+            <h4>If any of those go wrong</h4>
+            <p>Go back to the app's Setup checklist first. It will usually name the cause. If it says
+              everything is ready and something still looks wrong, see below.</p>
+          </div>
+        </article>
+
+        <!-- ===================== PART 10 ===================== -->
+        <article class="part" id="part-10">
+          <p class="part__kicker">Part 10</p>
+          <h2>When something looks wrong</h2>
+          <div class="table-wrap">
+            <table class="sheet">
+              <thead>
+                <tr><th>What you see</th><th>What it means</th><th>Fix</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Buyer sees retail prices</td>
+                  <td>Their company location has no catalog, or has a second catalog with no
+                    discount</td>
+                  <td>Assign your wholesale catalog to that location, and remove the extra one</td>
+                </tr>
+                <tr>
+                  <td>The ordering page is blank</td>
+                  <td>The order form isn't on the page, or it's set to a different page handle</td>
+                  <td>Setup checklist → <em>Add to theme</em>, then Save in the theme editor</td>
+                </tr>
+                <tr>
+                  <td>"Setup needed" on the page</td>
+                  <td>No wholesale collection is chosen, or the collection is empty</td>
+                  <td>Theme editor → the order form block → choose your collection</td>
+                </tr>
+                <tr>
+                  <td>Buyer can't sign in</td>
+                  <td>They aren't a contact on a company, or you're on classic accounts</td>
+                  <td>Add them as a contact; turn on current customer accounts</td>
+                </tr>
+                <tr>
+                  <td>Retail shoppers see wholesale rates</td>
+                  <td>The shipping rules are off</td>
+                  <td>App → Shipping → turn the rules on</td>
+                </tr>
+                <tr>
+                  <td>Buyers see no shipping at checkout</td>
+                  <td>No wholesale rate covers their order total or their zone</td>
+                  <td>App → Shipping → check your tiers cover every total, including large ones</td>
+                </tr>
+                <tr>
+                  <td>Prices look right, but the buyer is charged retail</td>
+                  <td>They're signed in as a personal customer, not as their company</td>
+                  <td>Have them sign out and back in; check they appear under the company's contacts</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note" style="margin-top:2rem">
+            <h4>Still stuck?</h4>
+            <p>Email <a href="mailto:b2bquickwholesale@gmail.com">b2bquickwholesale@gmail.com</a>
+              with your store address and a screenshot of the Setup checklist. That screenshot
+              usually tells us the answer straight away. <a href="support.html">More about
+              support</a>.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top">
+    <div class="wrap">
+      <div class="panel panel--ink center">
+        <h2 style="color:inherit">Ready when you are.</h2>
+        <p class="lede" style="color:#cfd2c4">7 days free, then $34.95 a month.</p>
+        <div class="btn-row" style="justify-content:center;margin-top:1.4rem">
+          <a class="btn btn--lime" href="pricing.html#install">Install on Shopify</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html"><span class="logo__chip">B2B</span><span class="logo__word">Quick <span>Wholesale</span></span></a>
+        <p class="small" style="margin-top:.9rem;max-width:30ch">Wholesale ordering for Shopify's native B2B. Built by Superfine Designs.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="demo.html">See it work</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="requirements.html">Requirements</a></li>
+      </ul></div>
+      <div><h4>Help</h4><ul>
+        <li><a href="setup.html">Setup guide</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul></div>
+      <div><h4>Legal</h4><ul>
+        <li><a href="privacy.html">Privacy policy</a></li>
+        <li><a href="terms.html">Terms of service</a></li>
+      </ul></div>
+    </div>
+    <div class="footer__legal">
+      <span class="tiny">© <span data-year>2026</span> Superfine Designs. Not affiliated with Shopify Inc.</span>
+      <span class="tiny">Questions? <a href="mailto:b2bquickwholesale@gmail.com">b2bquickwholesale@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

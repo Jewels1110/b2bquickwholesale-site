@@ -1,0 +1,221 @@
+/* ==========================================================================
+   Interactive demo of the buyer's ordering page.
+   A faithful, self-contained replica: same layout, same behaviour (quantity
+   rules, stock limits, "In cart", running total, free-shipping progress).
+   Prefixed .od- so it can never collide with the site's own styles.
+   ========================================================================== */
+
+.od {
+  --od-line: #e3e0d4;
+  --od-line-strong: #c8c4b4;
+  --od-ink: #14150f;
+  --od-muted: #61645a;
+  --od-surface: #ffffff;
+  --od-accent: #14573a;
+  --od-accent-text: #ffffff;
+  border: 1px solid var(--od-line-strong);
+  border-radius: 6px;
+  background: var(--od-surface);
+  color: var(--od-ink);
+  overflow: hidden;
+  font-size: .95rem;
+}
+
+/* Browser chrome, so it reads as "this is their storefront". */
+.od__chrome {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .6rem .9rem;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--od-line);
+}
+.od__dot { width: .62rem; height: .62rem; border-radius: 50%; background: var(--od-line-strong); }
+.od__url {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: .76rem;
+  color: var(--ink-3);
+  background: var(--paper);
+  border: 1px solid var(--od-line);
+  border-radius: 99px;
+  padding: .28rem .7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.od__body { padding: clamp(.9rem, 2.4vw, 1.5rem); }
+
+.od__head { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; }
+.od__title { font: 650 1.25rem/1.2 var(--sans); margin: 0; }
+.od__who { font-size: .86rem; color: var(--od-muted); }
+
+.od__bar { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-bottom: 1rem; }
+.od__search {
+  flex: 1 1 12rem;
+  min-width: 0;
+  height: 2.6rem;
+  padding: 0 .8rem;
+  border: 1.5px solid var(--od-line-strong);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 1rem; /* 16px: anything smaller makes iOS zoom in on focus */
+  background: var(--od-surface);
+  color: var(--od-ink);
+}
+.od__chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.od__chip {
+  font: 600 .82rem/1 var(--sans);
+  padding: .5rem .7rem;
+  border: 1.5px solid var(--od-line-strong);
+  border-radius: 99px;
+  background: var(--od-surface);
+  color: var(--od-ink);
+  cursor: pointer;
+}
+.od__chip[aria-pressed="true"] { background: var(--od-ink); border-color: var(--od-ink); color: #fff; }
+.od__views { display: inline-flex; border: 1.5px solid var(--od-line-strong); border-radius: 4px; overflow: hidden; }
+.od__view {
+  font: 600 .82rem/1 var(--sans);
+  padding: .55rem .8rem;
+  background: var(--od-surface);
+  border: 0;
+  color: var(--od-muted);
+  cursor: pointer;
+}
+.od__view[aria-pressed="true"] { background: var(--od-ink); color: #fff; }
+
+.od__cols {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) 6rem 5.4rem 7.4rem 5.6rem;
+  gap: .8rem;
+  padding: 0 .7rem .5rem;
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.od__list { border: 1px solid var(--od-line); border-radius: 5px; overflow: hidden; }
+.od__row {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) 6rem 5.4rem 7.4rem 5.6rem;
+  gap: .8rem;
+  align-items: center;
+  padding: .7rem;
+  border-bottom: 1px solid var(--od-line);
+  background: var(--od-surface);
+}
+.od__row:last-child { border-bottom: 0; }
+.od__row[hidden] { display: none; }
+.od__thumb { width: 3.2rem; height: 3.2rem; border-radius: 3px; background: #f4f3ee; display: grid; place-items: center; font: 600 .9rem/1 var(--mono); color: #9b9c90; }
+.od__name { font-weight: 600; line-height: 1.25; }
+.od__meta { font-size: .78rem; color: var(--od-muted); display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-top: .15rem; }
+.od__incart { background: var(--od-accent); color: var(--od-accent-text); border-radius: 3px; padding: .05rem .4rem; font-weight: 700; font-size: .72rem; }
+.od__msrp { color: var(--od-muted); text-decoration: line-through; font-size: .86rem; }
+.od__price { font-weight: 700; font-variant-numeric: tabular-nums; }
+.od__rule { display: block; font-size: .74rem; color: var(--od-muted); margin-top: .2rem; }
+
+.od__stepper { display: inline-grid; grid-template-columns: 2rem 2.6rem 2rem; border: 1.5px solid var(--od-line-strong); border-radius: 4px; overflow: hidden; }
+.od__stepper button { border: 0; background: var(--od-surface); font: 500 1.05rem/1 var(--sans); color: var(--od-ink); cursor: pointer; height: 2.2rem; }
+.od__stepper button:hover { background: #f4f3ee; }
+@media (pointer: coarse) {
+  .od__stepper { grid-template-columns: 2.8rem 3.2rem 2.8rem; }
+  .od__stepper button { height: 2.9rem; font-size: 1.2rem; }
+  .od__stepper input { height: 2.9rem; font-size: 1rem; }
+  .od__add { min-height: 2.9rem; }
+  .od__chip, .od__view { min-height: 2.5rem; }
+}
+.od__stepper input {
+  border: 0;
+  border-inline: 1.5px solid var(--od-line-strong);
+  text-align: center;
+  font: 600 1rem/1 var(--sans);
+  font-variant-numeric: tabular-nums;
+  background: var(--od-surface);
+  color: var(--od-ink);
+  -moz-appearance: textfield;
+  min-width: 0;
+}
+.od__stepper input::-webkit-outer-spin-button,
+.od__stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.od__total { font-variant-numeric: tabular-nums; font-weight: 600; }
+.od__add {
+  width: 100%;
+  padding: .6rem .5rem;
+  border: 1.5px solid var(--od-accent);
+  border-radius: 4px;
+  background: var(--od-accent);
+  color: var(--od-accent-text);
+  font: 650 .88rem/1 var(--sans);
+  cursor: pointer;
+}
+.od__add[disabled] { background: #eceadf; border-color: #cbc8b9; color: #5f6155; cursor: not-allowed; }
+.od__add.is-added { background: var(--od-ink); border-color: var(--od-ink); }
+
+.od__summary {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem 1.4rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: .9rem 1.1rem;
+  border: 1px solid var(--od-line-strong);
+  border-radius: 5px;
+  background: var(--od-surface);
+}
+.od__sumlabel { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); display: block; }
+.od__sumtotal { font: 700 1.5rem/1.1 var(--sans); font-variant-numeric: tabular-nums; }
+.od__ship { font-size: .84rem; color: var(--od-muted); }
+.od__status { font-size: .86rem; color: var(--od-accent); font-weight: 600; min-height: 1.2em; }
+
+/* Catalog (grid) view */
+.od__list[data-view="catalog"] { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: .8rem; border: 0; }
+.od__list[data-view="catalog"] .od__row {
+  grid-template-columns: minmax(0, 1fr);
+  border: 1px solid var(--od-line);
+  border-radius: 5px;
+  align-items: start;
+  gap: .5rem;
+}
+.od__list[data-view="catalog"] .od__thumb { width: 100%; height: 6.5rem; font-size: 1.1rem; }
+.od__list[data-view="catalog"] .od__cell--qty { justify-self: start; }
+.od__cols[data-view="catalog"] { display: none; }
+
+@media (max-width: 720px) {
+  .od__cols { display: none; }
+  /* Phone: name on top, then price and quantity on one line, then a full-width Add. */
+  .od__row {
+    grid-template-columns: 3.2rem minmax(0, 1fr);
+    grid-template-areas:
+      "thumb body"
+      "price qty"
+      "action action";
+    row-gap: .6rem;
+    align-items: center;
+  }
+  .od__cell--thumb { grid-area: thumb; align-self: start; }
+  .od__cell--body { grid-area: body; }
+  .od__cell--msrp { display: none; }
+  .od__cell--price { grid-area: price; display: block; font-size: 1.05rem; white-space: nowrap; }
+  .od__cell--qty { grid-area: qty; display: flex; align-items: center; justify-content: flex-end; gap: .8rem; }
+  .od__cell--action { grid-area: action; }
+  .od__list[data-view="catalog"] .od__row { grid-template-areas: "body body" "price qty" "action action"; }
+  .od__list[data-view="catalog"] .od__cell--thumb { display: none; }
+}
+
+/* The little caption that explains what just happened, for a first-time viewer. */
+.od-caption {
+  display: flex;
+  gap: .7rem;
+  align-items: flex-start;
+  margin-top: .9rem;
+  font-size: .92rem;
+  color: var(--ink-2);
+}
+.od-caption b { color: var(--ink); }

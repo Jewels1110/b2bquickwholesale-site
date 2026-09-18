@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://b2bquickwholesale.com/sitemap.xml
